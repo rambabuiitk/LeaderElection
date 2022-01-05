@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
+
+jar {
+    manifest {
+        attributes "Main-Class": "LeaderElectionMain"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+dependencies {
+    implementation group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.7.0'
+}
